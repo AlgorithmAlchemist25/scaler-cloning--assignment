@@ -1,0 +1,1086 @@
+@import "tailwindcss";
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+
+body {
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: #0b0b0f;
+  background: #ffffff;
+}
+
+
+button {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   TOP BLACK BAR
+   ========================================================= */
+
+.top-bar {
+  height: 50px;
+  background: #08091f;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  padding: 0 30px;
+}
+
+
+.top-bar-right {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 26px;
+
+  font-size: 16px;
+}
+
+
+.top-item {
+  white-space: nowrap;
+}
+
+
+.search-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+
+.top-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   MAIN NAV
+   ========================================================= */
+
+.main-nav {
+  height: 76px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 30px;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #e8e8ed;
+
+  position: relative;
+  z-index: 10;
+}
+
+
+.zoom-logo {
+  color: #0f5de7;
+
+  font-size: 46px;
+  font-weight: 700;
+
+  letter-spacing: -4px;
+
+  line-height: 1;
+
+  margin-right: 40px;
+}
+
+
+.main-links {
+  display: flex;
+  align-items: center;
+
+  gap: 48px;
+
+  color: #5c5b7d;
+
+  font-size: 20px;
+  font-weight: 500;
+}
+
+
+.right-links {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 30px;
+}
+
+
+.right-links button {
+  border: 0;
+  background: transparent;
+
+  color: #5c5b7d;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  padding: 8px 0;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  cursor: pointer;
+}
+
+
+.right-links button:hover {
+  color: #1464e8;
+}
+
+
+.nav-dropdown {
+  gap: 4px !important;
+}
+
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 12px;
+
+  background: #ec3b7a;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.body-layout {
+  display: flex;
+
+  min-height: calc(100vh - 126px);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+  width: 350px;
+
+  flex-shrink: 0;
+
+  background: #f7f7fa;
+
+  border-right: 1px solid #ededf2;
+
+  padding-top: 12px;
+
+  overflow-y: auto;
+}
+
+
+.sidebar-home {
+  height: 50px;
+
+  margin-right: 10px;
+
+  padding-left: 44px;
+
+  display: flex;
+  align-items: center;
+
+  color: #0866ec;
+
+  font-size: 17px;
+
+  border-radius: 0 25px 25px 0;
+}
+
+
+.sidebar-home.active {
+  background: #eef6ff;
+}
+
+
+.sidebar-section-title {
+  margin-top: 38px;
+
+  margin-bottom: 17px;
+
+  padding-left: 16px;
+
+  font-size: 15px;
+
+  color: #5f6070;
+}
+
+
+.sidebar-item {
+  min-height: 42px;
+
+  padding: 0 20px 0 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #111111;
+
+  font-size: 17px;
+
+  cursor: pointer;
+}
+
+
+.sidebar-item:hover {
+  background: #eeeeF5;
+}
+
+
+.sidebar-item-right {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: #222;
+}
+
+
+.new-badge {
+  border: 1px solid #78a9ff;
+
+  color: #216eea;
+
+  font-size: 11px;
+
+  border-radius: 10px;
+
+  padding: 1px 6px;
+
+  line-height: 15px;
+}
+
+
+.discover-products {
+  margin-top: 8px;
+
+  padding: 0 44px;
+
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+
+  color: #111;
+
+  font-size: 16px;
+}
+
+
+.sidebar-bottom {
+  margin-top: 30px;
+
+  border-top: 0;
+}
+
+
+.sidebar-expandable {
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding-left: 20px;
+
+  font-size: 16px;
+
+  color: #222;
+
+  cursor: pointer;
+}
+
+
+.sidebar-expandable:hover {
+  background: #eeeeF5;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+.dashboard {
+  flex: 1;
+
+  background: #ffffff;
+
+  padding: 45px 55px 80px;
+
+  min-width: 0;
+}
+
+
+.dashboard-grid {
+  display: grid;
+
+  grid-template-columns: minmax(500px, 1fr) 380px;
+
+  gap: 28px;
+
+  max-width: 1320px;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   PROFILE CARD
+   ========================================================= */
+
+.profile-card {
+  min-height: 148px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 25px rgba(30, 45, 70, 0.08);
+
+  padding: 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+
+.profile-left {
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+.large-avatar {
+  width: 92px;
+  height: 92px;
+
+  flex-shrink: 0;
+
+  border-radius: 23px;
+
+  background: #ed3b7a;
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 45px;
+  font-weight: 500;
+}
+
+
+.profile-left h1 {
+  margin: 0;
+
+  font-size: 28px;
+
+  font-weight: 650;
+
+  color: #0b0b0e;
+}
+
+
+.profile-left p {
+  margin: 5px 0 0;
+
+  font-size: 17px;
+
+  color: #66677c;
+}
+
+
+.profile-left strong {
+  color: #10101a;
+
+  font-weight: 500;
+}
+
+
+.profile-actions {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 22px;
+
+  padding-right: 5px;
+}
+
+
+.manage-plan {
+  border: 0;
+
+  background: #f1f4f7;
+
+  color: #0870e9;
+
+  border-radius: 16px;
+
+  padding: 11px 28px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+
+.plan-details {
+  border: 0;
+
+  background: transparent;
+
+  color: #0866e8;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   QUICK CARD
+   ========================================================= */
+
+.quick-card {
+  min-height: 238px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 25px rgba(30, 45, 70, 0.08);
+
+  padding: 28px 30px;
+}
+
+
+.quick-actions {
+  display: flex;
+
+  justify-content: space-around;
+
+  align-items: flex-start;
+}
+
+
+.quick-action {
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #5f607a;
+
+  font-size: 15px;
+}
+
+
+.quick-icon {
+  width: 59px;
+  height: 59px;
+
+  border-radius: 16px;
+
+  background: #1475e9;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+.quick-icon.orange {
+  background: #f76b20;
+}
+
+
+.personal-id {
+  margin-top: 22px;
+
+  text-align: center;
+}
+
+
+.personal-id h3 {
+  margin: 0 0 10px;
+
+  font-size: 19px;
+
+  font-weight: 650;
+}
+
+
+.meeting-id-value {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  font-size: 17px;
+}
+
+
+.meeting-id-value button {
+  border: 0;
+
+  background: transparent;
+
+  color: #5c5c63;
+
+  cursor: pointer;
+
+  display: flex;
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY
+   ========================================================= */
+
+.recent-card {
+  min-height: 400px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 25px rgba(30, 45, 70, 0.08);
+
+  padding: 32px 30px;
+
+  grid-column: 1;
+
+  grid-row: 2;
+}
+
+
+.recent-card h2 {
+  margin: 0;
+
+  font-size: 28px;
+
+  font-weight: 650;
+}
+
+
+.recent-line {
+  height: 2px;
+
+  background: #f0f1f4;
+
+  margin-top: 25px;
+}
+
+
+.recent-empty {
+  min-height: 285px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+.recent-empty h3 {
+  margin-top: 26px;
+
+  font-size: 20px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   EMPTY BOX ILLUSTRATION
+   ========================================================= */
+
+.empty-box {
+  width: 145px;
+  height: 105px;
+
+  position: relative;
+
+  margin-top: 10px;
+}
+
+
+.box-top {
+  width: 100px;
+  height: 40px;
+
+  background: #3b8bed;
+
+  position: absolute;
+
+  left: 22px;
+  top: 8px;
+
+  transform: perspective(100px) rotateX(12deg);
+
+  clip-path: polygon(
+    20% 0,
+    50% 15%,
+    80% 0,
+    100% 35%,
+    52% 62%,
+    0 35%
+  );
+}
+
+
+.box-body {
+  width: 100px;
+  height: 57px;
+
+  background: #3987e5;
+
+  position: absolute;
+
+  left: 22px;
+  top: 37px;
+
+  clip-path: polygon(
+    0 0,
+    52% 25%,
+    100% 0,
+    100% 78%,
+    50% 100%,
+    0 78%
+  );
+}
+
+
+.box-body span {
+  display: block;
+
+  width: 55px;
+  height: 7px;
+
+  background: rgba(255,255,255,.8);
+
+  position: absolute;
+
+  left: 23px;
+
+  border-radius: 3px;
+}
+
+
+.box-body span:first-child {
+  top: 13px;
+}
+
+
+.box-body span:last-child {
+  top: 29px;
+
+  width: 35px;
+  left: 33px;
+}
+
+
+/* =========================================================
+   MEETINGS CARD
+   ========================================================= */
+
+.meetings-card {
+  min-height: 220px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 25px rgba(30, 45, 70, 0.08);
+
+  padding: 31px;
+
+  grid-column: 2;
+
+  grid-row: 2;
+
+  align-self: start;
+}
+
+
+.meetings-heading {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.meetings-heading h2 {
+  margin: 0;
+
+  font-size: 28px;
+
+  font-weight: 650;
+}
+
+
+.meetings-heading button {
+  border: 0;
+
+  background: transparent;
+
+  color: #0968e9;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+
+.upcoming-box {
+  margin-top: 22px;
+
+  background: #f6f7f8;
+
+  border-radius: 11px;
+
+  min-height: 48px;
+
+  padding: 14px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+}
+
+
+.upcoming-list {
+  margin-top: 18px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+.upcoming-meeting {
+  width: 100%;
+
+  border: 0;
+
+  background: #f6f7f8;
+
+  border-radius: 10px;
+
+  padding: 11px 14px;
+
+  text-align: left;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  cursor: pointer;
+}
+
+
+.upcoming-meeting strong {
+  font-size: 14px;
+}
+
+
+.upcoming-meeting span {
+  color: #666;
+
+  font-size: 12px;
+}
+
+
+.test-audio {
+  display: block;
+
+  margin: 20px auto 0;
+
+  border: 0;
+
+  background: #f0f3f6;
+
+  color: #0866e8;
+
+  border-radius: 18px;
+
+  padding: 10px 17px;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error-toast {
+  position: fixed;
+
+  right: 25px;
+  bottom: 25px;
+
+  z-index: 100;
+
+  background: #d93025;
+
+  color: white;
+
+  border-radius: 10px;
+
+  padding: 13px 15px 13px 18px;
+
+  box-shadow: 0 8px 25px rgba(0,0,0,.2);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+.error-toast button {
+  border: 0;
+
+  background: transparent;
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   FLOATING HELP BUTTON
+   ========================================================= */
+
+.help-button {
+  position: fixed;
+
+  right: 28px;
+  bottom: 20px;
+
+  width: 68px;
+  height: 68px;
+
+  border-radius: 50%;
+
+  border: 0;
+
+  background: #438af5;
+
+  color: white;
+
+  font-size: 43px;
+
+  line-height: 1;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.18);
+
+  cursor: pointer;
+
+  z-index: 50;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1250px) {
+
+  .main-links {
+    gap: 25px;
+    font-size: 17px;
+  }
+
+  .right-links {
+    gap: 18px;
+  }
+
+  .right-links button {
+    font-size: 16px;
+  }
+
+  .sidebar {
+    width: 270px;
+  }
+
+  .dashboard {
+    padding: 30px;
+  }
+
+}
+
+
+@media (max-width: 1000px) {
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-card,
+  .meetings-card {
+    grid-column: 1;
+  }
+
+  .recent-card {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .meetings-card {
+    grid-row: auto;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 750px) {
+
+  .top-bar {
+    display: none;
+  }
+
+  .main-nav {
+    height: 65px;
+    padding: 0 18px;
+  }
+
+  .zoom-logo {
+    font-size: 38px;
+    margin-right: 0;
+  }
+
+  .main-links {
+    display: none;
+  }
+
+  .right-links {
+    gap: 12px;
+  }
+
+  .right-links button {
+    font-size: 14px;
+  }
+
+  .right-links button:nth-child(4) {
+    display: none;
+  }
+
+  .dashboard {
+    padding: 20px 15px 60px;
+  }
+
+  .profile-card {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 25px;
+  }
+
+  .profile-actions {
+    align-items: flex-start;
+  }
+
+  .large-avatar {
+    width: 72px;
+    height: 72px;
+
+    font-size: 35px;
+  }
+
+}
