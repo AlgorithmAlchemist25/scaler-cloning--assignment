@@ -3,8 +3,7 @@
   <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4caa5a20f5c2d6/icons/FastAPI.svg" width="60" alt="FastAPI" />
   <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4caa5a20f5c2d6/icons/PostgreSQL-Dark.svg" width="60" alt="PostgreSQL" />
   <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4caa5a20f5c2d6/icons/Vercel-Dark.svg" width="60" alt="Vercel" />
-
-  <h1>Zoom Clone</h1>
+   <h1>Zoom Clone</h1>
   <p><strong>A full-stack video-meeting scheduling app inspired by Zoom, built with Next.js and FastAPI.</strong></p>
 
   <p>
@@ -15,7 +14,6 @@
     <a href="#api-endpoints">API</a>
   </p>
 </div>
-
 ---
 
 ## 🌍 Live Demo
