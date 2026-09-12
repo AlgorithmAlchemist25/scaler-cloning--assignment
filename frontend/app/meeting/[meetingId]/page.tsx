@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import { getMeeting, joinMeeting } from "../../../lib/api";
 import { Meeting } from "../../../lib/types";
-
+import CallRoom from "../../../components/meeting/CallRoom";
 
 export default function MeetingRoom() {
   const params = useParams();
@@ -23,7 +23,16 @@ export default function MeetingRoom() {
   const [muted, setMuted] = useState(false);
   const [videoOff, setVideoOff] = useState(false);
 
+  // Actual camera/microphone stream
+  const [cameraStream, setCameraStream] =
+    useState<MediaStream | null>(null);
 
+  const [cameraError, setCameraError] = useState("");
+
+
+  /*
+   * Load meeting details when the page opens.
+   */
   useEffect(() => {
     const loadMeeting = async () => {
       try {
@@ -47,6 +56,23 @@ export default function MeetingRoom() {
   }, [meetingId]);
 
 
+  /*
+   * Stop camera and microphone when the component
+   * is removed from the page.
+   */
+  useEffect(() => {
+    return () => {
+      cameraStream?.getTracks().forEach((track) => {
+        track.stop();
+      });
+    };
+  }, [cameraStream]);
+
+
+  /*
+   * Join the meeting and request access to the
+   * user's camera and microphone.
+   */
   const handleJoin = async () => {
     if (!displayName.trim()) {
       setError("Please enter your display name.");
@@ -56,13 +82,49 @@ export default function MeetingRoom() {
     try {
       setJoining(true);
       setError("");
+      setCameraError("");
 
+      /*
+       * First tell the backend that the user is joining.
+       */
       await joinMeeting(
         meetingId,
         displayName.trim()
       );
 
+      /*
+       * The user has successfully joined.
+       */
       setJoined(true);
+
+      /*
+       * Request access to the browser camera
+       * and microphone.
+       */
+      try {
+        const stream =
+          await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
+
+        setCameraStream(stream);
+      } catch (err) {
+        console.error(
+          "Camera/microphone access failed:",
+          err
+        );
+
+        /*
+         * Camera access is not required to remain
+         * in the meeting, so we allow the user to
+         * continue with their avatar.
+         */
+        setCameraError(
+          "Camera or microphone access was denied. You can still join the meeting."
+        );
+      }
+
     } catch (err) {
       console.error(err);
 
@@ -77,6 +139,69 @@ export default function MeetingRoom() {
   };
 
 
+  /*
+   * Toggle microphone.
+   *
+   * MediaStream audio tracks have an `enabled`
+   * property. Setting it to false disables the
+   * microphone without destroying the stream.
+   */
+  const handleToggleMuted = () => {
+    const newMuted = !muted;
+
+    if (cameraStream) {
+      cameraStream
+        .getAudioTracks()
+        .forEach((track) => {
+          track.enabled = !newMuted;
+        });
+    }
+
+    setMuted(newMuted);
+  };
+
+
+  /*
+   * Toggle camera.
+   *
+   * We enable/disable the existing video track
+   * instead of requesting camera access again.
+   */
+  const handleToggleVideo = () => {
+    const newVideoOff = !videoOff;
+
+    if (cameraStream) {
+      cameraStream
+        .getVideoTracks()
+        .forEach((track) => {
+          track.enabled = !newVideoOff;
+        });
+    }
+
+    setVideoOff(newVideoOff);
+  };
+
+
+  /*
+   * Leave meeting.
+   *
+   * Stop all camera/microphone tracks before
+   * navigating back to the dashboard.
+   */
+  const handleLeave = () => {
+    cameraStream?.getTracks().forEach((track) => {
+      track.stop();
+    });
+
+    setCameraStream(null);
+
+    router.push("/");
+  };
+
+
+  /*
+   * Loading state
+   */
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f7f9fc]">
@@ -88,10 +213,14 @@ export default function MeetingRoom() {
   }
 
 
+  /*
+   * Meeting doesn't exist.
+   */
   if (!meeting) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f7f9fc] p-6">
         <div className="w-full max-w-md rounded-2xl bg-white p-8 text-center shadow-sm">
+
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-red-50 text-2xl text-red-500">
             !
           </div>
@@ -111,12 +240,16 @@ export default function MeetingRoom() {
           >
             Back to dashboard
           </button>
+
         </div>
       </main>
     );
   }
 
 
+  /*
+   * Join screen.
+   */
   if (!joined) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[#f7f9fc] p-6">
@@ -124,6 +257,7 @@ export default function MeetingRoom() {
         <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl">
 
           <div className="text-center">
+
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-xl font-bold text-[#2D8CFF]">
               Z
             </div>
@@ -135,10 +269,12 @@ export default function MeetingRoom() {
             <p className="mt-2 text-sm text-slate-500">
               {meeting.title || "Instant Meeting"}
             </p>
+
           </div>
 
 
           <div className="mt-8">
+
             <label className="mb-2 block text-sm font-medium text-slate-700">
               Your display name
             </label>
@@ -146,7 +282,9 @@ export default function MeetingRoom() {
             <input
               autoFocus
               value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
+              onChange={(e) =>
+                setDisplayName(e.target.value)
+              }
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handleJoin();
@@ -155,6 +293,7 @@ export default function MeetingRoom() {
               placeholder="Enter your name"
               className="w-full rounded-lg border border-slate-300 px-4 py-3 outline-none focus:border-[#2D8CFF] focus:ring-2 focus:ring-blue-100"
             />
+
           </div>
 
 
@@ -188,121 +327,24 @@ export default function MeetingRoom() {
   }
 
 
+  /*
+   * Actual meeting room.
+   *
+   * CallRoom receives the MediaStream and is
+   * responsible for displaying the video.
+   */
   return (
-    <main className="flex min-h-screen flex-col bg-[#171717] text-white">
-
-      {/* Meeting header */}
-      <header className="flex h-16 items-center justify-between border-b border-white/10 px-5">
-
-        <div>
-          <h1 className="font-medium">
-            {meeting.title || "Instant Meeting"}
-          </h1>
-
-          <p className="text-xs text-white/50">
-            Meeting ID: {meetingId}
-          </p>
-        </div>
-
-        <button
-          onClick={() => router.push("/")}
-          className="rounded-lg px-4 py-2 text-sm text-white/70 hover:bg-white/10 hover:text-white"
-        >
-          Leave
-        </button>
-
-      </header>
-
-
-      {/* Video area */}
-      <section className="flex flex-1 items-center justify-center p-6">
-
-        <div className="grid w-full max-w-5xl gap-3 md:grid-cols-2">
-
-          {/* Current participant */}
-          <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-[#242424]">
-
-            {videoOff ? (
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#2D8CFF] text-2xl font-semibold">
-                {displayName.charAt(0).toUpperCase()}
-              </div>
-            ) : (
-              <div className="text-center text-white/40">
-                <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#2D8CFF] text-2xl font-semibold text-white">
-                  {displayName.charAt(0).toUpperCase()}
-                </div>
-
-                <p className="mt-3 text-sm">
-                  Camera preview
-                </p>
-              </div>
-            )}
-
-            <div className="absolute bottom-3 left-3 rounded-md bg-black/50 px-2 py-1 text-xs">
-              {displayName} {muted ? "(muted)" : ""}
-            </div>
-
-          </div>
-
-
-          {/* Placeholder participant */}
-          <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-[#242424]">
-
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-slate-600 text-2xl font-semibold">
-              Z
-            </div>
-
-            <div className="absolute bottom-3 left-3 rounded-md bg-black/50 px-2 py-1 text-xs">
-              Waiting for participants
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      {/* Controls */}
-      <footer className="flex h-24 items-center justify-center border-t border-white/10 bg-[#171717]">
-
-        <div className="flex items-center gap-3">
-
-          <button
-            onClick={() => setMuted(!muted)}
-            className={`flex h-12 w-12 items-center justify-center rounded-full ${
-              muted
-                ? "bg-red-500"
-                : "bg-white/10 hover:bg-white/20"
-            }`}
-          >
-            {muted ? "🔇" : "🎙"}
-          </button>
-
-
-          <button
-            onClick={() => setVideoOff(!videoOff)}
-            className={`flex h-12 w-12 items-center justify-center rounded-full ${
-              videoOff
-                ? "bg-red-500"
-                : "bg-white/10 hover:bg-white/20"
-            }`}
-          >
-            {videoOff ? "▣" : "▣"}
-          </button>
-
-
-          <button
-            onClick={() => router.push("/")}
-            className="ml-4 rounded-full bg-red-500 px-6 py-3 text-sm font-semibold hover:bg-red-600"
-          >
-            Leave Meeting
-          </button>
-
-        </div>
-
-      </footer>
-
-    </main>
+    <CallRoom
+      meetingTitle={meeting.title}
+      meetingId={meetingId}
+      displayName={displayName}
+      muted={muted}
+      videoOff={videoOff}
+      cameraStream={cameraStream}
+      cameraError={cameraError}
+      onToggleMuted={handleToggleMuted}
+      onToggleVideo={handleToggleVideo}
+      onLeave={handleLeave}
+    />
   );
 }
