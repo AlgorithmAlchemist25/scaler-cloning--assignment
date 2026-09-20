@@ -4,32 +4,29 @@ import { FormEvent, useState } from "react";
 
 interface JoinMeetingModalProps {
   open: boolean;
-  loading: boolean;
   error: string;
   onClose: () => void;
-  onJoin: (meetingId: string, displayName: string) => void;
+  onJoin: (meetingId: string) => void;
 }
 
 export default function JoinMeetingModal({
   open,
-  loading,
   error,
   onClose,
   onJoin,
 }: JoinMeetingModalProps) {
   const [meetingId, setMeetingId] = useState("");
-  const [displayName, setDisplayName] = useState("");
 
   if (!open) return null;
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    if (!meetingId.trim() || !displayName.trim()) {
+    if (!meetingId.trim()) {
       return;
     }
 
-    onJoin(meetingId.trim(), displayName.trim());
+    onJoin(meetingId.trim());
   };
 
   return (
@@ -43,42 +40,28 @@ export default function JoinMeetingModal({
         </h2>
 
         <p className="mt-1 text-sm text-slate-500">
-          Enter the meeting details below.
+          Enter the meeting ID or invite link below.
         </p>
 
-        <div className="mt-6 space-y-4">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700">
-              Meeting ID or invite link
-            </label>
+        <div className="mt-6">
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">
+            Meeting ID or invite link
+          </label>
 
-            <input
-              value={meetingId}
-              onChange={(e) => setMeetingId(e.target.value)}
-              placeholder="Enter meeting ID"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[#2D8CFF] focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700">
-              Your name
-            </label>
-
-            <input
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Enter your display name"
-              className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[#2D8CFF] focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          {error && (
-            <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
-              {error}
-            </div>
-          )}
+          <input
+            autoFocus
+            value={meetingId}
+            onChange={(e) => setMeetingId(e.target.value)}
+            placeholder="Enter meeting ID"
+            className="w-full rounded-lg border border-slate-300 px-4 py-3 text-sm outline-none focus:border-[#2D8CFF] focus:ring-2 focus:ring-blue-100"
+          />
         </div>
+
+        {error && (
+          <div className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-600">
+            {error}
+          </div>
+        )}
 
         <div className="mt-6 flex justify-end gap-3">
           <button
@@ -91,10 +74,9 @@ export default function JoinMeetingModal({
 
           <button
             type="submit"
-            disabled={loading}
-            className="rounded-lg bg-[#2D8CFF] px-5 py-2 text-sm font-semibold text-white hover:bg-[#1677e8] disabled:opacity-60"
+            className="rounded-lg bg-[#2D8CFF] px-5 py-2 text-sm font-semibold text-white hover:bg-[#1677e8]"
           >
-            {loading ? "Joining..." : "Join Meeting"}
+            Continue
           </button>
         </div>
       </form>

@@ -26,9 +26,7 @@ export async function getMeetings(): Promise<Meeting[]> {
 }
 
 
-export async function getMeeting(
-  meetingId: string
-): Promise<Meeting> {
+export async function getMeeting(meetingId: string): Promise<Meeting> {
   const response = await fetch(
     `${API_URL}/meetings/${meetingId}`,
     {
@@ -40,9 +38,7 @@ export async function getMeeting(
 }
 
 
-export async function createMeeting(
-  data: CreateMeetingData = {}
-): Promise<Meeting> {
+export async function createMeeting(data: CreateMeetingData = {}): Promise<Meeting> {
   const response = await fetch(`${API_URL}/meetings/`, {
     method: "POST",
     headers: {
@@ -55,9 +51,7 @@ export async function createMeeting(
 }
 
 
-export async function scheduleMeeting(
-  data: CreateMeetingData
-): Promise<Meeting> {
+export async function scheduleMeeting(data: CreateMeetingData): Promise<Meeting> {
   const response = await fetch(`${API_URL}/meetings/schedule`, {
     method: "POST",
     headers: {
@@ -70,10 +64,7 @@ export async function scheduleMeeting(
 }
 
 
-export async function joinMeeting(
-  meetingId: string,
-  displayName: string
-): Promise<Participant> {
+export async function joinMeeting(meetingId: string, displayName: string): Promise<Participant> {
   const response = await fetch(
     `${API_URL}/meetings/${meetingId}/join`,
     {

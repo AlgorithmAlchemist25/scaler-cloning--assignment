@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import {
   createMeeting,
   getMeetings,
-  joinMeeting,
   scheduleMeeting,
 } from "../lib/api";
 
@@ -192,11 +191,9 @@ export default function Home() {
 
 
   async function handleJoinMeeting(
-    meetingId: string,
-    displayName: string
+    meetingId: string
   ) {
     try {
-      setActionLoading(true);
       setError("");
 
       let actualMeetingId = meetingId.trim();
@@ -205,8 +202,6 @@ export default function Home() {
         actualMeetingId =
           actualMeetingId.split("/meeting/")[1].split("/")[0];
       }
-
-      await joinMeeting(actualMeetingId, displayName);
 
       setJoinMeetingOpen(false);
 
@@ -219,8 +214,6 @@ export default function Home() {
           ? err.message
           : "Unable to join meeting."
       );
-    } finally {
-      setActionLoading(false);
     }
   }
 
@@ -703,7 +696,6 @@ export default function Home() {
 
       <JoinMeetingModal
         open={joinMeetingOpen}
-        loading={actionLoading}
         error={error}
         onClose={() => {
           setJoinMeetingOpen(false);

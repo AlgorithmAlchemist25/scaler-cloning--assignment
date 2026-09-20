@@ -45,13 +45,7 @@ def schedule_new_meeting(
     meeting_data: ScheduledMeetingCreate,
     db: Session = Depends(get_db)
 ):
-    meeting = schedule_meeting(
-        db=db,
-        title=meeting_data.title,
-        description=meeting_data.description,
-        scheduled_at=meeting_data.scheduled_at,
-        duration_minutes=meeting_data.duration_minutes
-    )
+    meeting = schedule_meeting(db, meeting_data)
 
     return MeetingResponse(
         id=meeting.id,

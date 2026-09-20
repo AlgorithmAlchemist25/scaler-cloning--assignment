@@ -1,9 +1,6 @@
 import { Meeting } from "./types";
 
-/**
- * Scheduled meetings that haven't started yet, soonest first.
- * Instant (unscheduled) meetings have no `scheduled_at` and are excluded.
- */
+
 export function getUpcomingMeetings(meetings: Meeting[]): Meeting[] {
   return meetings
     .filter(
@@ -18,10 +15,7 @@ export function getUpcomingMeetings(meetings: Meeting[]): Meeting[] {
     );
 }
 
-/**
- * The Join dialog accepts either a bare meeting ID or a full invite
- * link like ".../meeting/<id>". This pulls the ID out of either form.
- */
+
 export function extractMeetingId(input: string): string {
   const trimmed = input.trim();
 

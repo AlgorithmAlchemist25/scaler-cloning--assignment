@@ -32,6 +32,16 @@ export default function ScheduleMeetingModal({
 
   if (!open) return null;
 
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setDate("");
+    setHour(12);
+    setMinute(0);
+    setAmpm("AM");
+    setDuration("60");
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
@@ -64,6 +74,8 @@ export default function ScheduleMeetingModal({
       scheduledAt,
       Number(duration)
     );
+
+    resetForm();
   };
 
   return (
