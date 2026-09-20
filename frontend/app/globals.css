@@ -828,71 +828,96 @@ button {
 
 
 .upcoming-list {
-  margin-top: 18px;
-
   display: flex;
-
   flex-direction: column;
-
-  gap: 8px;
+  gap: 12px;
 }
-
 
 .upcoming-meeting {
   width: 100%;
+  box-sizing: border-box;
 
   border: 0;
-
   background: #f6f7f8;
-
   border-radius: 10px;
 
-  padding: 11px 14px;
-
-  text-align: left;
+  padding: 14px;
 
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+  gap: 18px;
+}
+
+.upcoming-meeting-info {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
   flex-direction: column;
-
-  gap: 3px;
-
-  cursor: pointer;
+  gap: 5px;
 }
 
-
-.upcoming-meeting strong {
+.upcoming-meeting-info strong {
   font-size: 14px;
+  font-weight: 600;
+  color: #111;
 }
 
-
-.upcoming-meeting span {
+.upcoming-meeting .meeting-date {
   color: #666;
-
   font-size: 12px;
 }
 
+.upcoming-meeting .meeting-id {
+  color: #666;
+  font-size: 12px;
 
-.test-audio {
-  display: block;
+  overflow-wrap: anywhere;
+}
 
-  margin: 20px auto 0;
+.upcoming-meeting-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-  border: 0;
+  flex-shrink: 0;
+}
 
-  background: #f0f3f6;
+.upcoming-meeting-actions button {
+  border: 1px solid #d9dce1;
+  background: #ffffff;
+  color: #333;
 
-  color: #0866e8;
+  border-radius: 7px;
 
-  border-radius: 18px;
+  min-height: 34px;
+  padding: 7px 10px;
 
-  padding: 10px 17px;
-
-  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   cursor: pointer;
 }
 
+.upcoming-meeting-actions button:hover {
+  background: #eef3f8;
+}
+
+.upcoming-meeting-actions button:last-child {
+  background: #1475e9;
+  border-color: #1475e9;
+  color: white;
+
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.upcoming-meeting-actions button:last-child:hover {
+  background: #0866d9;
+}
 
 /* =========================================================
    ERROR
@@ -1082,5 +1107,7 @@ button {
 
     font-size: 35px;
   }
+
+  
 
 }

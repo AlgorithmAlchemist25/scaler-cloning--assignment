@@ -253,16 +253,6 @@ export default function Home() {
 
 
   const upcomingMeetings = meetings
-    .filter(
-      (meeting) =>
-        meeting.scheduled_at &&
-        new Date(meeting.scheduled_at) >= new Date()
-    )
-    .sort(
-      (a, b) =>
-        new Date(a.scheduled_at!).getTime() -
-        new Date(b.scheduled_at!).getTime()
-    );
 
 
   const personalMeetingId =
@@ -618,40 +608,61 @@ export default function Home() {
                   {upcomingMeetings
                     .slice(0, 3)
                     .map((meeting) => (
-                      <button
+                      <div
                         key={meeting.id}
                         className="upcoming-meeting"
-                        onClick={() =>
-                          router.push(
-                            `/meeting/${meeting.meeting_id}`
-                          )
-                        }
                       >
-                        <strong>
-                          {meeting.title ||
-                            "Scheduled Meeting"}
-                        </strong>
+                        <div className="upcoming-meeting-info">
+                          <strong>
+                            {meeting.title || "Scheduled Meeting"}
+                          </strong>
 
-                        <span>
-                          {meeting.scheduled_at
-                            ? new Date(
-                                meeting.scheduled_at
-                              ).toLocaleString([], {
-                                dateStyle: "medium",
-                                timeStyle: "short",
-                              })
-                            : ""}
-                        </span>
-                      </button>
+                          <span className="meeting-date">
+                            {meeting.scheduled_at
+                              ? new Date(
+                                  meeting.scheduled_at
+                                ).toLocaleString([], {
+                                  dateStyle: "medium",
+                                  timeStyle: "short",
+                                })
+                              : ""}
+                          </span>
+
+                          <span className="meeting-id">
+                            Meeting ID: {meeting.meeting_id}
+                          </span>
+                        </div>
+
+                        <div className="upcoming-meeting-actions">
+                          <button
+                            type="button"
+                            title="Copy Meeting ID"
+                            onClick={() =>
+                              navigator.clipboard.writeText(
+                                meeting.meeting_id
+                              )
+                            }
+                          >
+                            <CopyIcon />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              router.push(
+                                `/meeting/${meeting.meeting_id}`
+                              )
+                            }
+                          >
+                            Join
+                          </button>
+                        </div>
+                      </div>
                     ))}
 
                 </div>
               )}
 
-
-              <button className="test-audio">
-                Test Audio and Video
-              </button>
 
             </section>
 

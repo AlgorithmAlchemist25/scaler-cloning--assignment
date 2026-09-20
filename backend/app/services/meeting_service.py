@@ -27,7 +27,17 @@ def create_meeting(db: Session, meeting_data: MeetingCreate) -> Meeting:
     return meeting
 
 def get_meetings(db: Session) -> list[Meeting]:
-    return db.query(Meeting).order_by(Meeting.created_at.desc()).all()
+    now = datetime.now(timezone.utc)
+
+    return (
+        db.query(Meeting)
+        .filter(
+            Meeting.scheduled_at.isnot(None),
+            Meeting.scheduled_at >= now
+        )
+        .order_by(Meeting.scheduled_at.asc())
+        .all()
+    )
 
 
 def get_meeting(db: Session, meeting_id: str) -> Meeting | None:
