@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from uuid import uuid4
 
 from sqlalchemy.orm import Session
@@ -27,13 +27,14 @@ def create_meeting(db: Session, meeting_data: MeetingCreate) -> Meeting:
     return meeting
 
 def get_meetings(db: Session) -> list[Meeting]:
-    now = datetime.now(timezone.utc)
+    india_timezone = timezone(timedelta(hours=5, minutes=30))
+    now = datetime.now(india_timezone).replace(tzinfo=None)
 
     return (
         db.query(Meeting)
         .filter(
             Meeting.scheduled_at.isnot(None),
-            Meeting.scheduled_at >= now
+            Meeting.scheduled_at > now
         )
         .order_by(Meeting.scheduled_at.asc())
         .all()
